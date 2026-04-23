@@ -5,13 +5,12 @@
 venv/
 .env
 
-# Model files (huge)
-*.pt
+# Model files (large — only models/ directory is committed)
 *.engine
 *.onnx
-models/*.pt
-models/*.engine
-models/*.onnx
+# Allow models/*.pt in repo (small enough); exclude all other .pt
+*.pt
+!models/*.pt
 
 # Datasets
 roboflow_downloads/
