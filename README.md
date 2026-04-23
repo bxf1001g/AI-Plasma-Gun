@@ -52,8 +52,8 @@ python train_v5.py
 
 ### On the Jetson Nano Orin Super
 ```bash
-git clone https://github.com/<you>/plasam_ai.git
-cd plasam_ai
+git clone https://github.com/bxf1001g/AI-Plasma-Gun.git
+cd AI-Plasma-Gun
 ./jetson/setup_jetson.sh
 
 # Download trained weights to models/bird_v5.pt
