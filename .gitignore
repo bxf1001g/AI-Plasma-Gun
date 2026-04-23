@@ -1,0 +1,27 @@
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Model files (huge)
+*.pt
+*.engine
+*.onnx
+models/*.pt
+models/*.engine
+models/*.onnx
+
+# Datasets
+roboflow_downloads/
+combined_dataset_v*/
+runs/
+*.cache
+*_train.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,53 @@
+# ─── Bird-Plasma Controller config ────────────────────────────────────────────
+# All values can be edited live from the web UI at http://<jetson-ip>:5000
+
+model:
+  path: models/bird_v5.pt           # YOLO weights (download from releases)
+  imgsz: 1280                       # inference resolution
+  device: 0                         # GPU id; "cpu" to force CPU
+  target_class: bird                # only fire on this class
+
+detection:
+  conf_threshold: 0.55              # min YOLO confidence (UI slider 0.30–0.95)
+  min_motion_ratio: 0.003           # fraction of bbox pixels that must show motion
+  min_movement_px: 6                # min center-point displacement between frames
+  confirm_moving_hits: 3            # # of consecutive moving frames before "real bird"
+  track_max_distance: 25            # max px between frames to consider same track
+  track_max_age: 12                 # frames a stale track is kept before deletion
+  trace_length: 12                  # how many points to draw on the trail
+
+camera:
+  # Arducam B0576 IMX662 USB UVC camera
+  index: 0                          # /dev/video0 on Jetson
+  width: 1280
+  height: 720
+  fps: 30
+  fourcc: MJPG                      # MJPG = high fps; YUYV = lower latency
+
+trigger:
+  enabled: true                     # master arm switch (UI toggle)
+  cooldown_s: 20                    # min seconds between auto-fires (>= ESP32 cooldown_ms)
+  min_track_age: 4                  # require track to have been seen N frames before firing
+  required_consecutive_frames: 4    # bird must be confirmed N frames in a row to fire
+  daylight_only: false              # if true, skip when frame mean brightness < threshold
+  brightness_threshold: 30          # 0–255
+
+plasma:
+  host: 192.168.4.1                 # ESP32 SoftAP IP
+  # Locked timing pushed to ESP32 at startup (operator can't change via phone)
+  pre_flush_ms: 15000
+  gas_fill_ms: 225
+  gas_pulses: 1
+  gas_pause_ms: 200
+  settle_ms: 0
+  spark_ms: 500
+  spark_retries: 3
+  spark_gap_ms: 300
+  exhaust_ms: 15000
+  cooldown_ms: 20000
+
+ui:
+  host: 0.0.0.0
+  port: 5000
+  jpeg_quality: 70                  # MJPEG stream quality 1–100
+  stream_fps: 15                    # max stream fps (inference is faster)
